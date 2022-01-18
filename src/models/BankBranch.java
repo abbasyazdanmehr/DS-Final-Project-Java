@@ -1,10 +1,13 @@
 package models;
 
 public class BankBranch {
-    // if name is equal to bankName branch is main branch
+    // in main branch of bank name and bank name is equal
     private final String name;
     private final String bankName;
     private final Coordinate location;
+    public BankBranch parent;
+    public BankBranch left;
+    public BankBranch right;
 
 
     public BankBranch(String name, String bankName, Coordinate location) {

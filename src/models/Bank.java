@@ -2,7 +2,6 @@ package models;
 
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Collections;
 
 public class Bank {
     private final String name;
