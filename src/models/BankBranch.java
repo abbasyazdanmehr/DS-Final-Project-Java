@@ -7,7 +7,7 @@ public class BankBranch {
     private final Coordinate location;
 
 
-    BankBranch(String name, String bankName, Coordinate location) {
+    public BankBranch(String name, String bankName, Coordinate location) {
         this.name = name;
         this.bankName = bankName;
         this.location = location;
@@ -23,5 +23,14 @@ public class BankBranch {
 
     public Coordinate getLocation() {
         return location;
+    }
+
+    @Override
+    public String toString() {
+        return "BankBranch{" +
+                "name='" + name + '\'' +
+                ", bankName='" + bankName + '\'' +
+                ", location=" + location +
+                '}';
     }
 }

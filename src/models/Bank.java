@@ -1,12 +1,14 @@
 package models;
 
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
 
 public class Bank {
     private final String name;
     private final ArrayList<BankBranch> branches = new ArrayList<>();
 
-    Bank(String name, BankBranch mainBranch) {
+    public Bank(String name, BankBranch mainBranch) {
         this.name = name;
         this.branches.add(mainBranch);
     }
@@ -38,5 +40,9 @@ public class Bank {
 
     public void addBranch(BankBranch branch) {
         this.branches.add(branch);
+    }
+
+    public void addBranches(BankBranch[] branches) {
+        this.branches.addAll(Arrays.asList(branches));
     }
 }

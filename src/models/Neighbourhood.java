@@ -7,7 +7,7 @@ public class Neighbourhood {
     private final Coordinate rightDown;
     private final Coordinate rightUp;
 
-    Neighbourhood(String name, Coordinate leftUp, Coordinate leftDown, Coordinate rightDown, Coordinate rightUp) {
+    public Neighbourhood(String name, Coordinate leftUp, Coordinate leftDown, Coordinate rightDown, Coordinate rightUp) {
         this.name = name;
         this.leftUp = leftUp;
         this.leftDown = leftDown;
@@ -33,5 +33,16 @@ public class Neighbourhood {
 
     public Coordinate getRightUp() {
         return rightUp;
+    }
+
+    @Override
+    public String toString() {
+        return "Neighbourhood{" +
+                "name='" + name + '\'' +
+                ", leftUp=" + leftUp +
+                ", leftDown=" + leftDown +
+                ", rightDown=" + rightDown +
+                ", rightUp=" + rightUp +
+                '}';
     }
 }
