@@ -38,7 +38,6 @@ public class Bank {
     }
 
     public void addBranch(BankBranch branch) {
-        branch.setIndexInBankBranchesList(this.branches.size());
         this.branches.add(branch);
     }
 

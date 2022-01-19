@@ -1,6 +1,5 @@
 package test;
 
-import ds.BranchesKDTree;
 import models.Bank;
 import models.BankBranch;
 import models.Coordinate;

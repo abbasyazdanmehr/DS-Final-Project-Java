@@ -2,11 +2,12 @@ package ds;
 
 import models.BankBranch;
 
-public class BranchesKDTree {
+// Node is a BankBranch Object
+public class BranchesByKDTree {
     // we assume K is 2 in this project and this ds doesn't work for K != 2
     private final BankBranch root;
 
-    public BranchesKDTree(BankBranch branch) {
+    public BranchesByKDTree(BankBranch branch) {
         this.root = branch;
     }
 
@@ -119,7 +120,7 @@ public class BranchesKDTree {
             return false;
         }
 
-        if (temp.getIndexInBankBranchesList() == 0)  {
+        if (temp.getName().equals(temp.getBankName()))  {
             System.out.println("This is Main Branch of Bank Bro!");
             return false;
         }
@@ -141,7 +142,7 @@ public class BranchesKDTree {
                 temp.parent.right = temp.right;
             }
 
-        } else if (temp.right == null) { // temp.left == null
+        } else if (temp.right == null) { // temp.left == null this is leaf node
 
             if (temp.parent.left.isEqualWith(temp)) {
                 temp.parent.left = null;

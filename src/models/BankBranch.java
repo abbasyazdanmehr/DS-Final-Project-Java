@@ -5,11 +5,11 @@ public class BankBranch {
     private final String name;
     private final String bankName;
     private final Coordinate location;
+
+    // KDTree fields
     public BankBranch parent;
     public BankBranch left;
     public BankBranch right;
-    private int indexInBankBranchesList;
-
 
     public BankBranch(
             String name,
@@ -31,14 +31,6 @@ public class BankBranch {
 
     public Coordinate getLocation() {
         return location;
-    }
-
-    public int getIndexInBankBranchesList() {
-        return indexInBankBranchesList;
-    }
-
-    public void setIndexInBankBranchesList(int indexInBankBranchesList) {
-        this.indexInBankBranchesList = indexInBankBranchesList;
     }
 
     @Override
