@@ -8,9 +8,14 @@ public class BankBranch {
     public BankBranch parent;
     public BankBranch left;
     public BankBranch right;
+    private int indexInBankBranchesList;
 
 
-    public BankBranch(String name, String bankName, Coordinate location) {
+    public BankBranch(
+            String name,
+            String bankName,
+            Coordinate location
+    ) {
         this.name = name;
         this.bankName = bankName;
         this.location = location;
@@ -28,6 +33,14 @@ public class BankBranch {
         return location;
     }
 
+    public int getIndexInBankBranchesList() {
+        return indexInBankBranchesList;
+    }
+
+    public void setIndexInBankBranchesList(int indexInBankBranchesList) {
+        this.indexInBankBranchesList = indexInBankBranchesList;
+    }
+
     @Override
     public String toString() {
         return "BankBranch{" +
@@ -35,5 +48,9 @@ public class BankBranch {
                 ", bankName='" + bankName + '\'' +
                 ", location=" + location +
                 '}';
+    }
+
+    public boolean isEqualWith(BankBranch branch) {
+        return this.getLocation() == branch.getLocation();
     }
 }

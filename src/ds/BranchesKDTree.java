@@ -57,7 +57,7 @@ public class BranchesKDTree {
 
             }
 
-            counter ++;
+            counter++;
         }
 
     }
@@ -71,6 +71,105 @@ public class BranchesKDTree {
         System.out.println(branch.getName());
 
         printInorder(branch.right);
+    }
+
+    public BankBranch searchByCoordinate(int x, int y) {
+        BankBranch temp = root;
+        boolean findIt = false;
+        int counter = 0;
+
+        while (temp != null) {
+
+            if (x == temp.getLocation().x && y == temp.getLocation().y) {
+                findIt = true;
+                break;
+            }
+
+            if (counter % 2 == 0) {
+
+                if (x < temp.getLocation().x) {
+                    temp = temp.left;
+                } else {
+                    temp = temp.right;
+                }
+
+            } else {
+
+                if (y < temp.getLocation().y) {
+                    temp = temp.left;
+                } else {
+                    temp = temp.right;
+                }
+
+            }
+
+            counter++;
+        }
+
+        if (findIt) return temp;
+        else return null;
+    }
+
+    public boolean deleteByCoordinate(int x, int y) {
+
+        BankBranch temp = searchByCoordinate(x, y);
+
+        if (temp == null) {
+            System.out.println("Branch doesn't exist!");
+            return false;
+        }
+
+        if (temp.getIndexInBankBranchesList() == 0)  {
+            System.out.println("This is Main Branch of Bank Bro!");
+            return false;
+        }
+
+        //deleting from k-d tree
+        if (temp.right == null && temp.left != null) {
+
+            if (temp.parent.left.isEqualWith(temp)) {
+                temp.parent.left = temp.left;
+            } else {
+                temp.parent.right = temp.left;
+            }
+
+        } else if (temp.right != null && temp.left == null) {
+
+            if (temp.parent.left.isEqualWith(temp)) {
+                temp.parent.left = temp.right;
+            } else {
+                temp.parent.right = temp.right;
+            }
+
+        } else if (temp.right == null) { // temp.left == null
+
+            if (temp.parent.left.isEqualWith(temp)) {
+                temp.parent.left = null;
+            } else {
+                temp.parent.right = null;
+            }
+
+        } else {
+
+            BankBranch minimumGrater = findMinimumGrater(temp);
+            minimumGrater.parent = temp.parent;
+            minimumGrater.left = temp.left;
+            minimumGrater.right = temp.right;
+
+        }
+
+        //deleting from bank branches
+        // TODO: I need to code search for finding and deleting bank from list
+
+        return true;
+    }
+
+    public BankBranch findMinimumGrater(BankBranch branch) {
+        BankBranch temp = branch.right;
+        while (temp.left != null) {
+            temp = temp.left;
+        }
+        return temp;
     }
 
 

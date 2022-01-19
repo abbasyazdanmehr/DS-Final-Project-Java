@@ -38,10 +38,19 @@ public class Bank {
     }
 
     public void addBranch(BankBranch branch) {
+        branch.setIndexInBankBranchesList(this.branches.size());
         this.branches.add(branch);
     }
 
-    public void addBranches(BankBranch[] branches) {
-        this.branches.addAll(Arrays.asList(branches));
+    @Override
+    public String toString() {
+        return "Bank{" +
+                "name='" + name + '\'' +
+                ", coordinate=" + branches.get(0).getLocation() +
+                '}';
+    }
+
+    public boolean isEqualWith(Bank bank) {
+        return this.branches.get(0) == bank.branches.get(0);
     }
 }
