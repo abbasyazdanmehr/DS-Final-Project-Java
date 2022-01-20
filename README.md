@@ -23,7 +23,7 @@ A simple :)  Data Structure for :
 - [Trie tree EXPLAINED (YouTube)](https://www.youtube.com/watch?v=-urNrIAQnNo&t=78s)
 
 ### Hashing :
-    For hashing I just add index of array for Banks Object in BankBranches list
+    I use hashing by a new fields in bnaks as index in the bank ds
 
 
 <br>
