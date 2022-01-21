@@ -5,19 +5,19 @@ import models.Statics;
 
 public class BanksByTrieTree {
 
-    private final BankTrieNode root;
+    private final Bank root;
 
     public BanksByTrieTree() {
-        root = new BankTrieNode();
+        root = new Bank();
     }
 
-    public BankTrieNode getRoot() {
+    public Bank getRoot() {
         return root;
     }
 
     public void insert(Bank bank) {
 
-        BankTrieNode temp = root;
+        Bank temp = root;
 
         String bankName = bank.getName();
         int length = bankName.length();
@@ -26,18 +26,21 @@ public class BanksByTrieTree {
         for (int i = 0; i < length; i++) {
             childIndex = bankName.charAt(i) - 'a';
 
-            if (temp.children[childIndex] == null) {
-                temp.children[childIndex] = new BankTrieNode();
+            if (i != length - 1) {
+                if (temp.children[childIndex] == null) {
+                    temp.children[childIndex] = new Bank();
+                }
+            } else {
+                temp.children[childIndex] = new Bank(bank.getName(), bank.getMainBranch());
             }
 
             temp = temp.children[childIndex];
         }
 
-        temp.bank = bank;
     }
 
     public Bank search(String bankName) {
-        BankTrieNode temp = root;
+        Bank temp = root;
 
         int length = bankName.length();
         int childIndex;
@@ -50,24 +53,26 @@ public class BanksByTrieTree {
             temp = temp.children[childIndex];
         }
 
-        return temp.bank;
+        return temp;
     }
 
-    static boolean isEmpty(BankTrieNode node) {
+    static boolean isEmpty(Bank node) {
         for (int i = 0; i < Statics.SMALL_ALPHABET_SIZE; i++)
             if (node.children[i] != null)
                 return false;
         return true;
     }
 
-    public static BankTrieNode remove(BankTrieNode node, String bankName, int depth) {
+
+    // TODO: this method is not right now!
+    public static Bank remove(Bank node, String bankName, int depth) {
         if (node == null) return null;
 
         if (depth == bankName.length()) {
 
-            if (node.bank != null) {
-                System.out.println("DELETING WAS SUCCESSFUL!");
-                node.bank = null;
+            if (node.getName() != null) {
+                node.setName(null);
+                System.out.println("DELETING BANK WAS SUCCESSFUL!");
             }
 
             if (isEmpty(node)) node = null;
@@ -80,7 +85,7 @@ public class BanksByTrieTree {
         node.children[childIndex]
                 = remove(node.children[childIndex], bankName, depth + 1);
 
-        if (isEmpty(node) && node.bank == null) {
+        if (isEmpty(node) && node.getName() == null) {
             node = null;
         }
 

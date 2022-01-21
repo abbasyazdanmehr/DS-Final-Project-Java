@@ -119,18 +119,18 @@ public class BranchesByKDTree {
         else return null;
     }
 
-    public boolean deleteByCoordinate(int x, int y) {
+    public String deleteByCoordinate(int x, int y) {
 
         BankBranch temp = searchByCoordinate(x, y);
 
         if (temp == null) {
             System.out.println("Branch doesn't exist!");
-            return false;
+            return null;
         }
 
         if (temp.getName().equals(temp.getBankName()))  {
             System.out.println("This is Main Branch of Bank Bro!");
-            return false;
+            return null;
         }
 
         //deleting from k-d tree
@@ -152,7 +152,7 @@ public class BranchesByKDTree {
 
         } else if (temp.right == null) { // temp.left == null this is leaf node
 
-            if (temp.parent.left.isEqualWith(temp)) {
+            if (temp.parent.left != null && temp.parent.left.isEqualWith(temp)) {
                 temp.parent.left = null;
             } else {
                 temp.parent.right = null;
@@ -168,9 +168,10 @@ public class BranchesByKDTree {
         }
 
         //deleting from bank branches
-        // TODO: I need to code search for finding and deleting bank from list
 
-        return true;
+
+
+        return temp.getName();
     }
 
     public BankBranch findMinimumGrater(BankBranch branch) {

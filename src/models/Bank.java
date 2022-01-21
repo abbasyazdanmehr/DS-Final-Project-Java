@@ -1,15 +1,30 @@
 package models;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 
 public class Bank {
-    private final String name;
-    private final ArrayList<BankBranch> branches = new ArrayList<>();
+    private String name;
+    private final ArrayList<BankBranch> branches;
+
+    // TrieTree fields
+    public Bank[] children = new Bank[Statics.SMALL_ALPHABET_SIZE];
 
     public Bank(String name, BankBranch mainBranch) {
         this.name = name;
+        this.branches = new ArrayList<>();
         this.branches.add(mainBranch);
+        for (int i = 0; i < children.length; i++) {
+            children[i] = null;
+        }
+    }
+
+    // TrieTree null bank data constructor
+    public Bank() {
+        this.name = null;
+        this.branches = null;
+        for (int i = 0; i < children.length; i++) {
+            children[i] = null;
+        }
     }
 
     public String getName() {
@@ -22,6 +37,10 @@ public class Bank {
 
     public ArrayList<BankBranch> getBranches() {
         return branches;
+    }
+
+    public void setName(String name) {
+        this.name = name;
     }
 
     public void printCoordinates() {

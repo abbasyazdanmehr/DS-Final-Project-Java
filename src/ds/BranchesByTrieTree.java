@@ -1,23 +1,24 @@
 package ds;
 
+import models.Bank;
 import models.BankBranch;
 import models.Statics;
 
 // Node is a BankBranch Pointer
 public class BranchesByTrieTree {
-    private final BankBranchTrieNode root;
+    private final BankBranch root;
 
     public BranchesByTrieTree() {
-        root = new BankBranchTrieNode();
+        root = new BankBranch();
     }
 
-    public BankBranchTrieNode getRoot() {
+    public BankBranch getRoot() {
         return root;
     }
 
     public void insert(BankBranch branch) {
 
-        BankBranchTrieNode temp = root;
+        BankBranch temp = root;
 
         String branchName = branch.getName();
         int length = branchName.length();
@@ -26,18 +27,25 @@ public class BranchesByTrieTree {
         for (int i = 0; i < length; i++) {
             childIndex = branchName.charAt(i) - 'a';
 
-            if (temp.children[childIndex] == null) {
-                temp.children[childIndex] = new BankBranchTrieNode();
+            if (i != length - 1) {
+                if (temp.children[childIndex] == null) {
+                    temp.children[childIndex] = new BankBranch();
+                }
+            } else {
+                temp.children[childIndex] = new BankBranch(
+                        branch.getName(),
+                        branch.getBankName(),
+                        branch.getLocation()
+                );
             }
 
             temp = temp.children[childIndex];
         }
 
-        temp.branch = branch;
     }
 
     public BankBranch search(String branchName) {
-        BankBranchTrieNode temp = root;
+        BankBranch temp = root;
 
         int length = branchName.length();
         int childIndex;
@@ -50,22 +58,25 @@ public class BranchesByTrieTree {
             temp = temp.children[childIndex];
         }
 
-        return temp.branch;
+        return temp;
     }
 
-    static boolean isEmpty(BankBranchTrieNode node) {
+    static boolean isEmpty(BankBranch node) {
         for (int i = 0; i < Statics.SMALL_ALPHABET_SIZE; i++)
             if (node.children[i] != null)
                 return false;
         return true;
     }
 
-    public static BankBranchTrieNode remove(BankBranchTrieNode node, String branchName, int depth) {
+    public static BankBranch remove(BankBranch node, String branchName, int depth) {
         if (node == null) return null;
 
         if (depth == branchName.length()) {
 
-            if (node.branch != null) node.branch = null;
+            if (node.getName() != null) {
+                node.setName(null);
+                System.out.println("DELETING BRANCH WAS SUCCESSFUL!");
+            }
 
             if (isEmpty(node)) node = null;
 
@@ -77,7 +88,7 @@ public class BranchesByTrieTree {
         node.children[childIndex]
                 = remove(node.children[childIndex], branchName, depth + 1);
 
-        if (isEmpty(node) && node.branch == null) {
+        if (isEmpty(node) && node.getName() == null) {
             node = null;
         }
 

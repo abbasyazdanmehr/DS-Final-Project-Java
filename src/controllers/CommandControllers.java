@@ -33,10 +33,12 @@ public final class CommandControllers {
             if (command.equals("addN")) {
 
                 addNeighbourhoodController();
+                in.nextLine();
 
             } else if (command.equals("addB")) {
 
                 addBankController();
+                in.nextLine();
 
             } else if (command.equals("addBr")) {
 
@@ -127,8 +129,6 @@ public final class CommandControllers {
         System.out.print("   y: ");
         y = in.nextInt();
 
-        System.out.println();
-
         return new Coordinate(x, y);
     }
 
@@ -151,6 +151,7 @@ public final class CommandControllers {
 
         System.out.print("Name: ");
         String name = in.nextLine();
+
 
         banks.remove(banks.getRoot(), name, 0);
     }
@@ -235,8 +236,9 @@ public final class CommandControllers {
         System.out.println("Location: ");
         Coordinate location = addCoordinateController();
 
-        // TODO: implement TrieTree in the branch class
-        branchesByKDTree.deleteByCoordinate(location.x, location.y);
+        String name = branchesByKDTree.deleteByCoordinate(location.x, location.y);
+
+        if (name != null) BranchesByTrieTree.remove(branchesByTrieTree.getRoot(), name, 0);
     }
 
     public static void listBanksController() {
@@ -254,7 +256,10 @@ public final class CommandControllers {
         System.out.print("Bank Name: ");
         String name = in.nextLine();
 
-        // TODO
+        Bank bank = banks.search(name);
+        for (int i = 0; i < bank.getBranches().size(); i++) {
+            System.out.println(bank.getBranches().get(i));
+        }
     }
 
     public static void nearestBankController() {

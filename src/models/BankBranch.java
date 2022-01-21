@@ -2,7 +2,7 @@ package models;
 
 public class BankBranch {
     // in main branch of bank name and bank name is equal
-    private final String name;
+    private String name;
     private final String bankName;
     private final Coordinate location;
 
@@ -10,6 +10,9 @@ public class BankBranch {
     public BankBranch parent;
     public BankBranch left;
     public BankBranch right;
+
+    // TrieTree fields
+    public BankBranch[] children = new BankBranch[Statics.SMALL_ALPHABET_SIZE];
 
     public BankBranch(
             String name,
@@ -19,6 +22,19 @@ public class BankBranch {
         this.name = name;
         this.bankName = bankName;
         this.location = location;
+        for (int i = 0; i < children.length; i++) {
+            children[i] = null;
+        }
+    }
+
+    // TrieTree null data object constructor
+    public BankBranch() {
+        this.name = null;
+        this.bankName = null;
+        this.location = null;
+        for (int i = 0; i < children.length; i++) {
+            children[i] = null;
+        }
     }
 
     public String getName() {
@@ -31,6 +47,10 @@ public class BankBranch {
 
     public Coordinate getLocation() {
         return location;
+    }
+
+    public void setName(String name) {
+        this.name = name;
     }
 
     @Override
