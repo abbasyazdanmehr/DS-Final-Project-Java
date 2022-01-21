@@ -3,13 +3,13 @@ package ds;
 import models.BankBranch;
 import models.Statics;
 
-public class TrieNode {
+public class BankBranchTrieNode {
 
-    // TODO: Branches name can consist small alphabet
-    TrieNode[] children = new TrieNode[Statics.SMALL_ALPHABET_SIZE]; // children are similar to ports
+    // TODO: Branches name just can consist small alphabet.
+    BankBranchTrieNode[] children = new BankBranchTrieNode[Statics.SMALL_ALPHABET_SIZE]; // children are similar to ports
     BankBranch branch; // if branch is not null so this is the end of branch name
 
-    public TrieNode() {
+    public BankBranchTrieNode() {
         branch = null;
         for (int i = 0; i < children.length; i++)
             children[i] = null;

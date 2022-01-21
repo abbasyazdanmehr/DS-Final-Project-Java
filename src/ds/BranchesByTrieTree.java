@@ -1,20 +1,23 @@
 package ds;
 
-import models.Bank;
 import models.BankBranch;
 import models.Statics;
 
 // Node is a BankBranch Pointer
 public class BranchesByTrieTree {
-    private final TrieNode root;
+    private final BankBranchTrieNode root;
 
-    BranchesByTrieTree(TrieNode node) {
-        this.root = node;
+    public BranchesByTrieTree() {
+        root = new BankBranchTrieNode();
+    }
+
+    public BankBranchTrieNode getRoot() {
+        return root;
     }
 
     public void insert(BankBranch branch) {
 
-        TrieNode temp = root;
+        BankBranchTrieNode temp = root;
 
         String branchName = branch.getName();
         int length = branchName.length();
@@ -24,7 +27,7 @@ public class BranchesByTrieTree {
             childIndex = branchName.charAt(i) - 'a';
 
             if (temp.children[childIndex] == null) {
-                temp.children[childIndex] = new TrieNode();
+                temp.children[childIndex] = new BankBranchTrieNode();
             }
 
             temp = temp.children[childIndex];
@@ -34,7 +37,7 @@ public class BranchesByTrieTree {
     }
 
     public BankBranch search(String branchName) {
-        TrieNode temp = root;
+        BankBranchTrieNode temp = root;
 
         int length = branchName.length();
         int childIndex;
@@ -50,14 +53,14 @@ public class BranchesByTrieTree {
         return temp.branch;
     }
 
-    static boolean isEmpty(TrieNode node) {
+    static boolean isEmpty(BankBranchTrieNode node) {
         for (int i = 0; i < Statics.SMALL_ALPHABET_SIZE; i++)
             if (node.children[i] != null)
                 return false;
         return true;
     }
 
-    public static TrieNode remove(TrieNode node, String branchName, int depth) {
+    public static BankBranchTrieNode remove(BankBranchTrieNode node, String branchName, int depth) {
         if (node == null) return null;
 
         if (depth == branchName.length()) {

@@ -1,14 +1,22 @@
 package ds;
 
 import models.BankBranch;
+import models.Coordinate;
 
 // Node is a BankBranch Object
 public class BranchesByKDTree {
     // we assume K is 2 in this project and this ds doesn't work for K != 2
     private final BankBranch root;
 
-    public BranchesByKDTree(BankBranch branch) {
-        this.root = branch;
+    public BranchesByKDTree() {
+        this.root = new BankBranch(
+                null,
+                null,
+                new Coordinate(
+                        100,
+                        100
+                )
+        );
     }
 
     public BankBranch getRoot() {
