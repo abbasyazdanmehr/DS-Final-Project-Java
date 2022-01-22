@@ -1,6 +1,5 @@
 package ds;
 
-import models.Bank;
 import models.BankBranch;
 import models.Statics;
 
@@ -68,7 +67,7 @@ public class BranchesByTrieTree {
         return true;
     }
 
-    public static BankBranch remove(BankBranch node, String branchName, int depth) {
+    public static BankBranch deleteFromTrieTree(BankBranch node, String branchName, int depth) {
         if (node == null) return null;
 
         if (depth == branchName.length()) {
@@ -86,7 +85,7 @@ public class BranchesByTrieTree {
         int childIndex = branchName.charAt(depth) - 'a';
 
         node.children[childIndex]
-                = remove(node.children[childIndex], branchName, depth + 1);
+                = deleteFromTrieTree(node.children[childIndex], branchName, depth + 1);
 
         if (isEmpty(node) && node.getName() == null) {
             node = null;

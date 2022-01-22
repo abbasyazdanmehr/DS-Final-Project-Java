@@ -5,6 +5,7 @@ import ds.BranchesByKDTree;
 import ds.BranchesByTrieTree;
 import ds.NeighbourhoodList;
 import models.*;
+
 import java.util.Scanner;
 
 // This Class Control the inputs
@@ -99,6 +100,16 @@ public final class CommandControllers {
 
     }
 
+
+    public static void deleteBranch(BankBranch branch) {
+        branchesByKDTree.deleteFromKDTree(branch);
+        branchesByTrieTree.deleteFromTrieTree(
+                branchesByTrieTree.getRoot(),
+                branch.getName(),
+                0
+        );
+        System.out.println("Branch deleted successfully!");
+    }
 
     public static void printNeighbourhoodsController() {
         System.out.println(neighbourhoods.toString());
@@ -284,9 +295,12 @@ public final class CommandControllers {
         System.out.println("Location: ");
         Coordinate location = addCoordinateController();
 
-        String name = branchesByKDTree.deleteByCoordinate(location.x, location.y);
-
-        if (name != null) BranchesByTrieTree.remove(branchesByTrieTree.getRoot(), name, 0);
+        BankBranch branch = branchesByKDTree.searchByCoordinate(location.x, location.y);
+        if (branch == null) {
+            System.out.println("Branch Not Found!");
+        } else {
+            deleteBranch(branch);
+        }
     }
 
     public static void listBanksController() {

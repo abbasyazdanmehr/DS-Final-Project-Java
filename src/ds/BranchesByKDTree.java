@@ -119,36 +119,27 @@ public class BranchesByKDTree {
         else return null;
     }
 
-    public String deleteByCoordinate(int x, int y) {
+    public void deleteFromKDTree(BankBranch temp) {
 
-        BankBranch temp = searchByCoordinate(x, y);
-
-        if (temp == null) {
-            System.out.println("Branch doesn't exist!");
-            return null;
-        }
-
-        if (temp.getName().equals(temp.getBankName()))  {
-            System.out.println("This is Main Branch of Bank Bro!");
-            return null;
-        }
-
-        //deleting from k-d tree
         if (temp.right == null && temp.left != null) {
 
-            if (temp.parent.left.isEqualWith(temp)) {
+            if (temp.parent.left != null && temp.parent.left.isEqualWith(temp)) {
                 temp.parent.left = temp.left;
             } else {
                 temp.parent.right = temp.left;
             }
 
+            temp.left.parent = temp.parent;
+
         } else if (temp.right != null && temp.left == null) {
 
-            if (temp.parent.left.isEqualWith(temp)) {
+            if (temp.parent.left != null && temp.parent.left.isEqualWith(temp)) {
                 temp.parent.left = temp.right;
             } else {
                 temp.parent.right = temp.right;
             }
+
+            temp.right.parent = temp.parent;
 
         } else if (temp.right == null) { // temp.left == null this is leaf node
 
@@ -160,21 +151,16 @@ public class BranchesByKDTree {
 
         } else {
 
-            BankBranch minimumGrater = findMinimumGrater(temp);
-            minimumGrater.parent = temp.parent;
-            minimumGrater.left = temp.left;
-            minimumGrater.right = temp.right;
+            BankBranch minimumGreater = findMinimumGreater(temp);
+            minimumGreater.parent = temp.parent;
+            minimumGreater.left = temp.left;
+            minimumGreater.right = temp.right;
 
         }
 
-        //deleting from bank branches
-
-
-
-        return temp.getName();
     }
 
-    public BankBranch findMinimumGrater(BankBranch branch) {
+    public BankBranch findMinimumGreater(BankBranch branch) {
         BankBranch temp = branch.right;
         while (temp.left != null) {
             temp = temp.left;
