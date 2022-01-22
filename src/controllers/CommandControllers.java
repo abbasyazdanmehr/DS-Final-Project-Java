@@ -33,7 +33,6 @@ public final class CommandControllers {
             if (command.equals("addN")) {
 
                 addNeighbourhoodController();
-                in.nextLine();
 
             } else if (command.equals("addB")) {
 
@@ -121,15 +120,20 @@ public final class CommandControllers {
     }
 
     public static Coordinate addCoordinateController() {
-        int x, y;
 
-        System.out.print("   x: ");
-        x = in.nextInt();
+        try {
+            System.out.print("   x: ");
+            int x = in.nextInt();
 
-        System.out.print("   y: ");
-        y = in.nextInt();
+            System.out.print("   y: ");
+            int y = in.nextInt();
 
-        return new Coordinate(x, y);
+            return new Coordinate(x, y);
+        } catch (Exception e) {
+            System.out.println("x and y should be integer!");
+            return null;
+        }
+
     }
 
     public static void searchBankController() {
@@ -162,19 +166,44 @@ public final class CommandControllers {
         System.out.print("Name: ");
         String name = in.nextLine();
 
+        if (!Neighbourhood.nameChecker(name)) return;
+
         System.out.println("Location: ");
 
         System.out.println("  Left Up: ");
         Coordinate leftUp = addCoordinateController();
 
+        if (leftUp == null) return;
+
         System.out.println("  Left Down: ");
         Coordinate leftDown = addCoordinateController();
+
+        if (leftDown == null) return;
+
+        if (leftUp.x != leftDown.x || leftUp.y < leftDown.y) {
+            System.out.println("Neighbourhood should be a rectangle!");
+            return;
+        }
 
         System.out.println("  Right Down: ");
         Coordinate rightDown = addCoordinateController();
 
+        if (rightDown == null) return;
+
+        if (leftDown.y != rightDown.y || leftDown.x > rightDown.x) {
+            System.out.println("Neighbourhood should be a rectangle!");
+            return;
+        }
+
         System.out.println("  Right Up: ");
         Coordinate rightUp = addCoordinateController();
+
+        if (rightUp == null) return;
+
+        if (rightDown.x != rightUp.x || rightUp.y != leftUp.y || rightDown.y > rightUp.y) {
+            System.out.println("Neighbourhood should be a rectangle!");
+            return;
+        }
 
         neighbourhoods.add(
                 new Neighbourhood(
@@ -185,6 +214,8 @@ public final class CommandControllers {
                         rightUp
                 )
         );
+
+        System.out.println("Neighbourhood add Successfully!");
     }
 
     public static void addBankController() {
