@@ -13,9 +13,9 @@ public class BranchesByKDTree {
                 null,
                 null,
                 new Coordinate(
-                        100,
-                        100
-                )
+                        Integer.MIN_VALUE,
+                        Integer.MIN_VALUE
+                ) // root has just right node
         );
     }
 
@@ -72,7 +72,7 @@ public class BranchesByKDTree {
     }
 
 
-    public void printInorder(BankBranch branch) {
+    public static void printInorder(BankBranch branch) {
         if (branch == null) return;
 
         printInorder(branch.left);
@@ -167,6 +167,5 @@ public class BranchesByKDTree {
         }
         return temp;
     }
-
 
 }

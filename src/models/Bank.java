@@ -1,18 +1,18 @@
 package models;
 
-import java.util.ArrayList;
+import ds.BranchesByKDTree;
 
 public class Bank {
     private String name;
-    private final ArrayList<BankBranch> branches;
+    public BranchesByKDTree branches; // branches.root.right is the main Branch
 
     // TrieTree fields
     public Bank[] children = new Bank[Statics.SMALL_ALPHABET_SIZE];
 
     public Bank(String name, BankBranch mainBranch) {
         this.name = name;
-        this.branches = new ArrayList<>();
-        this.branches.add(mainBranch);
+        this.branches = new BranchesByKDTree();
+        this.branches.insert(mainBranch);
         for (int i = 0; i < children.length; i++) {
             children[i] = null;
         }
@@ -32,11 +32,7 @@ public class Bank {
     }
 
     public BankBranch getMainBranch() {
-        return this.branches.get(0);
-    }
-
-    public ArrayList<BankBranch> getBranches() {
-        return branches;
+        return this.branches.getRoot().right;
     }
 
     public void setName(String name) {
@@ -44,32 +40,21 @@ public class Bank {
     }
 
     public void printCoordinates() {
-        System.out.println(branches.get(0).getLocation().toString());
+        System.out.println(getMainBranch().getLocation().toString());
     }
 
     public void printAllData() {
         System.out.println("--------" + this.name + "--------");
-        for (BankBranch branch : this.branches) {
-            System.out.println("Name: " + branch.getName());
-            System.out.println(branch.getLocation().toString());
-        }
+        BranchesByKDTree.printInorder(getMainBranch());
         System.out.println("------------------------");
     }
 
     public void addBranch(BankBranch branch) {
-        this.branches.add(branch);
-    }
-
-    @Override
-    public String toString() {
-        return "Bank{" +
-                "name='" + name + '\'' +
-                ", coordinate=" + branches.get(0).getLocation() +
-                '}';
+        this.branches.insert(branch);
     }
 
     public boolean isEqualWith(Bank bank) {
-        return this.branches.get(0) == bank.branches.get(0);
+        return getMainBranch().getLocation() == bank.getMainBranch().getLocation();
     }
 
     public static boolean nameChecker(String name) {

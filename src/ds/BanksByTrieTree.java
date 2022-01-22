@@ -53,7 +53,8 @@ public class BanksByTrieTree {
             temp = temp.children[childIndex];
         }
 
-        return temp;
+        if (temp.getName() != null) return temp;
+        else return null;
     }
 
     static boolean isEmpty(Bank node) {
@@ -63,8 +64,6 @@ public class BanksByTrieTree {
         return true;
     }
 
-
-    // TODO: this method is not right now!
     public static Bank remove(Bank node, String bankName, int depth) {
         if (node == null) return null;
 

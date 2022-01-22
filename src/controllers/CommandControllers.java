@@ -11,9 +11,8 @@ import java.util.Scanner;
 // This Class Control the inputs
 public final class CommandControllers {
 
-    private static Scanner in = new Scanner(System.in);
+    private static final Scanner in = new Scanner(System.in);
 
-    // TODO: implement neighbourhoods by k-d tree
     public static NeighbourhoodList neighbourhoods = new NeighbourhoodList();
     public static BanksByTrieTree banksByTrieTree = new BanksByTrieTree();
     public static BranchesByTrieTree branchesByTrieTree = new BranchesByTrieTree();
@@ -30,69 +29,39 @@ public final class CommandControllers {
 
             System.out.println();
 
-            if (command.equals("addN")) {
-
+            if ("addN".equals(command)) {
                 addNeighbourhoodController();
-
-            } else if (command.equals("addB")) {
-
+            } else if ("addB".equals(command)) {
                 addBankController();
                 in.nextLine();
-
-            } else if (command.equals("addBr")) {
-
+            } else if ("addBr".equals(command)) {
                 addBankBranchController();
-
-            } else if (command.equals("delBr")) {
-
+            } else if ("delBr".equals(command)) {
                 deleteBankBranchController();
-
-            } else if (command.equals("listB")) {
-
+            } else if ("listB".equals(command)) {
                 listBanksController();
-
-            } else if (command.equals("listBrs")) {
-
+            } else if ("listBrs".equals(command)) {
                 listBankBranchesController();
-
-            } else if (command.equals("nearB")) {
-
+            } else if ("nearB".equals(command)) {
                 nearestBankController();
-
-            } else if (command.equals("nearBr")) {
-
+            } else if ("nearBr".equals(command)) {
                 nearestBankBranchController();
-
-            } else if (command.equals("availB")) {
-
+            } else if ("availB".equals(command)) {
                 isAvailableBankController();
-
-            } else if (command.equals("searchB")) {
-
+            } else if ("searchB".equals(command)) {
                 searchBankController();
-
-            } else if (command.equals("delB")) {
-
+            } else if ("delB".equals(command)) {
                 deleteBankController();
-
-            } else if (command.equals("printB")) {
-
+            } else if ("printB".equals(command)) {
                 printBankDataController();
-
-            } else if (command.equals("printNs")) {
-
+            } else if ("printNs".equals(command)) {
                 printNeighbourhoodsController();
-
-            } else if (command.equals("break")) {
-
+            } else if ("break".equals(command)) {
                 System.out.println("Bye!");
                 in.close();
                 break;
-
             } else {
-
                 invalidCommand();
-
             }
 
             System.out.println();
@@ -108,11 +77,13 @@ public final class CommandControllers {
                 branch.getName(),
                 0
         );
+        Bank bank = banksByTrieTree.search(branch.getBankName());
+        bank.branches.deleteFromKDTree(bank.getMainBranch());
         System.out.println("Branch deleted successfully!");
     }
 
     public static void printNeighbourhoodsController() {
-        System.out.println(neighbourhoods.toString());
+        neighbourhoods.printNeighbourhoods();
     }
 
     public static void printBankDataController() {
@@ -241,7 +212,7 @@ public final class CommandControllers {
 
         if (location == null) return;
 
-        if (branchesByKDTree.searchByCoordinate(location.x, location.y) == null) {
+        if (branchesByKDTree.searchByCoordinate(location.x, location.y) != null) {
             System.out.println("This Coordinate is full now!");
             return;
         }
@@ -250,6 +221,8 @@ public final class CommandControllers {
         branchesByKDTree.insert(branch);
         branchesByTrieTree.insert(branch);
         banksByTrieTree.insert(new Bank(name, branch));
+
+        System.out.println("Bank added successfully!");
     }
 
     public static void addBankBranchController() {
@@ -259,6 +232,7 @@ public final class CommandControllers {
         String name = in.nextLine();
 
         Bank bank = banksByTrieTree.search(name);
+        System.out.println(bank.getName());
         if (bank == null) {
 
             System.out.println("BANK NOT FOUND!");
@@ -319,9 +293,7 @@ public final class CommandControllers {
         String name = in.nextLine();
 
         Bank bank = banksByTrieTree.search(name);
-        for (int i = 0; i < bank.getBranches().size(); i++) {
-            System.out.println(bank.getBranches().get(i));
-        }
+        BranchesByKDTree.printInorder(bank.getMainBranch());
     }
 
     public static void nearestBankController() {

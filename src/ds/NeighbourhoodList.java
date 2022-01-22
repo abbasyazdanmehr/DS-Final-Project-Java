@@ -27,13 +27,9 @@ public class NeighbourhoodList {
         neighbourhoods = newNeighbourhoods;
     }
 
-    @Override
-    public String toString() {
-        String printing = "";
-        for (Neighbourhood n :
-                neighbourhoods) {
-            printing += n.toString() + ", ";
+    public void printNeighbourhoods() {
+        for (int i = 0; i < index; i++) {
+            System.out.println(neighbourhoods[i]);
         }
-        return printing;
     }
 }
