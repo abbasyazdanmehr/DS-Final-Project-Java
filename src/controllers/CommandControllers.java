@@ -3,10 +3,8 @@ package controllers;
 import ds.BanksByTrieTree;
 import ds.BranchesByKDTree;
 import ds.BranchesByTrieTree;
+import ds.NeighbourhoodList;
 import models.*;
-
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Scanner;
 
 // This Class Control the inputs
@@ -14,8 +12,9 @@ public final class CommandControllers {
 
     private static Scanner in = new Scanner(System.in);
 
-    public static ArrayList<Neighbourhood> neighbourhoods = new ArrayList<>();
-    public static BanksByTrieTree banks = new BanksByTrieTree();
+    // TODO: implement neighbourhoods by k-d tree
+    public static NeighbourhoodList neighbourhoods = new NeighbourhoodList();
+    public static BanksByTrieTree banksByTrieTree = new BanksByTrieTree();
     public static BranchesByTrieTree branchesByTrieTree = new BranchesByTrieTree();
     public static BranchesByKDTree branchesByKDTree = new BranchesByKDTree();
 
@@ -102,7 +101,7 @@ public final class CommandControllers {
 
 
     public static void printNeighbourhoodsController() {
-        System.out.println(Arrays.toString(neighbourhoods.toArray()));
+        System.out.println(neighbourhoods.toString());
     }
 
     public static void printBankDataController() {
@@ -111,7 +110,7 @@ public final class CommandControllers {
         System.out.print("Name: ");
         String name = in.nextLine();
 
-        Bank bank = banks.search(name);
+        Bank bank = banksByTrieTree.search(name);
         if (bank == null) {
             System.out.println("BANK NOT FOUND!");
         } else {
@@ -142,7 +141,7 @@ public final class CommandControllers {
         System.out.print("Name: ");
         String name = in.nextLine();
 
-        Bank bank = banks.search(name);
+        Bank bank = banksByTrieTree.search(name);
         if (bank == null) {
             System.out.println("BANK NOT FOUND!");
         } else {
@@ -157,7 +156,7 @@ public final class CommandControllers {
         String name = in.nextLine();
 
 
-        banks.remove(banks.getRoot(), name, 0);
+        banksByTrieTree.remove(banksByTrieTree.getRoot(), name, 0);
     }
 
     public static void addNeighbourhoodController() {
@@ -239,7 +238,7 @@ public final class CommandControllers {
         BankBranch branch = new BankBranch(name, name, location);
         branchesByKDTree.insert(branch);
         branchesByTrieTree.insert(branch);
-        banks.insert(new Bank(name, branch));
+        banksByTrieTree.insert(new Bank(name, branch));
     }
 
     public static void addBankBranchController() {
@@ -248,7 +247,7 @@ public final class CommandControllers {
         System.out.print("Bank Name: ");
         String name = in.nextLine();
 
-        Bank bank = banks.search(name);
+        Bank bank = banksByTrieTree.search(name);
         if (bank == null) {
 
             System.out.println("BANK NOT FOUND!");
@@ -305,7 +304,7 @@ public final class CommandControllers {
         System.out.print("Bank Name: ");
         String name = in.nextLine();
 
-        Bank bank = banks.search(name);
+        Bank bank = banksByTrieTree.search(name);
         for (int i = 0; i < bank.getBranches().size(); i++) {
             System.out.println(bank.getBranches().get(i));
         }
