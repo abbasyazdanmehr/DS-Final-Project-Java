@@ -71,4 +71,26 @@ public class Bank {
     public boolean isEqualWith(Bank bank) {
         return this.branches.get(0) == bank.branches.get(0);
     }
+
+    public static boolean nameChecker(String name) {
+
+        if (name.length() > 20) {
+            System.out.println("Name is long, Choose shorter name!");
+            return false;
+        }
+
+        if (name.length() == 0) {
+            System.out.println("Name should have one character at least!");
+            return false;
+        }
+
+        for (int i = 0; i < name.length(); i++) {
+            if (name.charAt(i) < 'a' || name.charAt(i) > 'z') {
+                System.out.println("Name should be contains just a to z!");
+                return false;
+            }
+        }
+
+        return true;
+    }
 }

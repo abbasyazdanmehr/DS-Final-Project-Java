@@ -224,8 +224,17 @@ public final class CommandControllers {
         System.out.print("Name: ");
         String name = in.nextLine();
 
+        if (!Bank.nameChecker(name)) return;
+
         System.out.println("Location: ");
         Coordinate location = addCoordinateController();
+
+        if (location == null) return;
+
+        if (branchesByKDTree.searchByCoordinate(location.x, location.y) == null) {
+            System.out.println("This Coordinate is full now!");
+            return;
+        }
 
         BankBranch branch = new BankBranch(name, name, location);
         branchesByKDTree.insert(branch);
