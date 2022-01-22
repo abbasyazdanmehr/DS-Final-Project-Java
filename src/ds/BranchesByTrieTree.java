@@ -57,7 +57,9 @@ public class BranchesByTrieTree {
             temp = temp.children[childIndex];
         }
 
-        return temp;
+
+        if (temp.getName() != null) return temp;
+        else return null;
     }
 
     static boolean isEmpty(BankBranch node) {
