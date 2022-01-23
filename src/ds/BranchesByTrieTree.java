@@ -57,7 +57,6 @@ public class BranchesByTrieTree {
             temp = temp.children[childIndex];
         }
 
-
         if (temp.getName() != null) return temp;
         else return null;
     }

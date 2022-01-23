@@ -238,7 +238,7 @@ public final class CommandControllers {
 
             if (!BankBranch.nameChecker(branchName)) return;
 
-            BankBranch newBranch = branchesByTrieTree.search(name);
+            BankBranch newBranch = branchesByTrieTree.search(branchName);
             if (newBranch != null) {
                 System.out.println("Branch Name already chosen!");
                 return;
