@@ -75,7 +75,6 @@ public class BranchesByTrieTree {
 
             if (node.getName() != null) {
                 node.setName(null);
-                System.out.println("DELETING BRANCH WAS SUCCESSFUL!");
             }
 
             if (isEmpty(node)) node = null;

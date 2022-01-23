@@ -68,17 +68,6 @@ public final class CommandControllers {
     }
 
 
-    public static void deleteBranch(BankBranch branch) {
-        branchesByKDTree.deleteFromKDTree(branch);
-        branchesByTrieTree.deleteFromTrieTree(
-                branchesByTrieTree.getRoot(),
-                branch.getName(),
-                0
-        );
-        Bank bank = banksByTrieTree.search(branch.getBankName());
-        bank.branches.deleteFromKDTree(bank.getMainBranch());
-        System.out.println("Branch deleted successfully!");
-    }
 
     public static void printNeighbourhoodsController() {
         neighbourhoods.printNeighbourhoods();
@@ -275,6 +264,30 @@ public final class CommandControllers {
         } else {
             deleteBranch(branch);
         }
+    }
+
+    public static void deleteBranch(BankBranch branch) {
+        if (branch.getBankName() == branch.getName()) {
+            System.out.println("This branch is main branch Bro!");
+            return;
+        }
+
+        // deleting from k-d tree
+        branchesByKDTree.deleteFromKDTree(branch);
+
+        // deleting from trie tree
+        branchesByTrieTree.deleteFromTrieTree(
+                branchesByTrieTree.getRoot(),
+                branch.getName(),
+                0
+        );
+
+        // deleting from bank
+        Bank bank = banksByTrieTree.search(branch.getBankName());
+        BankBranch branchToDelete = bank.branches.searchByCoordinate(branch.getLocation().x, branch.getLocation().y);
+        bank.branches.deleteFromKDTree(branchToDelete);
+
+        System.out.println("Branch deleted successfully!");
     }
 
     public static void listBanksController() {

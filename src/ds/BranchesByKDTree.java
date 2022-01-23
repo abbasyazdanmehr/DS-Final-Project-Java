@@ -120,6 +120,7 @@ public class BranchesByKDTree {
         else return null;
     }
 
+    // this method is static except for one specific condition
     public void deleteFromKDTree(BankBranch temp) {
 
         if (temp.right == null && temp.left != null) {

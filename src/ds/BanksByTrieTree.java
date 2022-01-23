@@ -73,7 +73,6 @@ public class BanksByTrieTree {
 
             if (node.getName() != null) {
                 node.setName(null);
-                System.out.println("DELETING BANK WAS SUCCESSFUL!");
             }
 
             if (isEmpty(node)) node = null;

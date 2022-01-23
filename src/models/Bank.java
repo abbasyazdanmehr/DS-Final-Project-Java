@@ -45,10 +45,6 @@ public class Bank {
         this.name = name;
     }
 
-    public void printCoordinates() {
-        System.out.println(getMainBranch().getLocation().toString());
-    }
-
     public void printAllData() {
         System.out.println("--------" + this.name + "--------");
         BranchesByKDTree.printInorder(getMainBranch());
