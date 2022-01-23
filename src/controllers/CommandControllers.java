@@ -50,6 +50,8 @@ public final class CommandControllers {
                 isAvailableBankController();
             } else if ("searchB".equals(command)) {
                 searchBankController();
+            } else if ("searchBr".equals(command)) {
+                searchBranchController();
             } else if ("printB".equals(command)) {
                 printBankDataController();
             } else if ("printNs".equals(command)) {
@@ -68,6 +70,14 @@ public final class CommandControllers {
     }
 
 
+
+    public static void searchBranchController() {
+        System.out.print("Name: ");
+        String name = in.nextLine();
+
+        BankBranch branch = branchesByTrieTree.search(name);
+        System.out.println(branch);
+    }
 
     public static void printNeighbourhoodsController() {
         neighbourhoods.printNeighbourhoods();

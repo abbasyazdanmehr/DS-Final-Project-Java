@@ -57,38 +57,4 @@ public class BanksByTrieTree {
         else return null;
     }
 
-    static boolean isEmpty(Bank node) {
-        for (int i = 0; i < Statics.SMALL_ALPHABET_SIZE; i++)
-            if (node.children[i] != null)
-                return false;
-        return true;
-    }
-
-
-    // TODO: this method is not right now!
-    public static Bank remove(Bank node, String bankName, int depth) {
-        if (node == null) return null;
-
-        if (depth == bankName.length()) {
-
-            if (node.getName() != null) {
-                node.setName(null);
-            }
-
-            if (isEmpty(node)) node = null;
-
-            return node;
-        }
-
-        int childIndex = bankName.charAt(depth) - 'a';
-
-        node.children[childIndex]
-                = remove(node.children[childIndex], bankName, depth + 1);
-
-        if (isEmpty(node) && node.getName() == null) {
-            node = null;
-        }
-
-        return node;
-    }
 }

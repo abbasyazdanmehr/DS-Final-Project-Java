@@ -72,7 +72,6 @@ public class BranchesByKDTree {
 
     }
 
-
     public static void printInorder(BankBranch branch) {
         if (branch == null) return;
 
