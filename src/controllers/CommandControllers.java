@@ -310,13 +310,17 @@ public final class CommandControllers {
     }
 
     public static void listBankBranchesController() {
-        System.out.println("LIST_BANK_BRANCHES");
+        System.out.println("BANK_ALL_DATA");
 
-        System.out.print("Bank Name: ");
+        System.out.print("Name: ");
         String name = in.nextLine();
 
         Bank bank = banksByTrieTree.search(name);
-        BranchesByKDTree.printInorder(bank.getMainBranch());
+        if (bank == null) {
+            System.out.println("BANK NOT FOUND!");
+        } else {
+            bank.printAllData();
+        }
     }
 
     public static void nearestBankController() {
