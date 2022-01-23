@@ -1,5 +1,6 @@
 package ds;
 
+import models.Bank;
 import models.BankBranch;
 import models.Coordinate;
 
@@ -167,6 +168,95 @@ public class BranchesByKDTree {
             temp = temp.left;
         }
         return temp;
+    }
+
+    public BankBranch findParentIfInsert(Coordinate coordinate) {
+        BankBranch temp = root;
+        int counter = 0;
+
+        while (true) {
+
+            if (counter % 2 == 0) {
+
+                if (coordinate.x < temp.getLocation().x) {
+                    if (temp.left == null) return temp;
+                    temp = temp.left;
+                } else {
+                    if (temp.right == null) return temp;
+                    temp = temp.right;
+                }
+
+            } else {
+
+                if (coordinate.y < temp.getLocation().y) {
+                    if (temp.left == null) return temp;
+                    temp = temp.left;
+                } else {
+                    if (temp.right == null) return temp;
+                    temp = temp.right;
+                }
+
+            }
+
+            counter++;
+        }
+    }
+
+    public static BankBranch closerDistance(Coordinate pivot, BankBranch branch1, BankBranch branch2) {
+        if (branch1 == null) return branch2;
+
+        if (branch2 == null) return branch1;
+
+        int distance1 = Coordinate.distancePower2(pivot, branch1.getLocation());
+        int distance2 = Coordinate.distancePower2(pivot, branch2.getLocation());
+
+        if (distance1 < distance2) {
+            return branch1;
+        } else {
+            return branch2;
+        }
+    }
+
+    public static BankBranch closestBranch(BankBranch branch, Coordinate coordinate, int depth) {
+        if (branch == null) return null;
+
+        BankBranch nextBranch = null;
+        BankBranch oppositeBranch = null;
+        boolean goLeftOrRight;
+
+        if (depth % 2 == 0) goLeftOrRight = (coordinate.x < branch.getLocation().x);
+        else goLeftOrRight = (coordinate.y < branch.getLocation().y);
+
+        if (goLeftOrRight) {
+            nextBranch = branch.left;
+            oppositeBranch = branch.right;
+        } else {
+            nextBranch = branch.right;
+            oppositeBranch = branch.left;
+        }
+
+        BankBranch best = closerDistance(
+                coordinate,
+                closestBranch(nextBranch, coordinate, depth + 1),
+                branch
+                );
+
+        boolean checkOppositeSide;
+        if (depth % 2 == 0)
+            checkOppositeSide =
+                    Coordinate.distancePower2(coordinate, best.getLocation()) > Coordinate.abs(coordinate.x - branch.getLocation().x);
+        else
+            checkOppositeSide =
+                    Coordinate.distancePower2(coordinate, best.getLocation()) > Coordinate.abs(coordinate.y - branch.getLocation().y);
+        if (checkOppositeSide) {
+            best = closerDistance(
+                    coordinate,
+                    closestBranch(oppositeBranch, coordinate, depth + 1),
+                    best
+            );
+        }
+
+        return best;
     }
 
 }

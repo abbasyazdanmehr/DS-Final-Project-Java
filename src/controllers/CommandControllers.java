@@ -326,10 +326,11 @@ public final class CommandControllers {
     public static void nearestBankController() {
         System.out.println("NEAREST_BANK");
 
-        System.out.print("Your Location: ");
+        System.out.println("Your Location: ");
         Coordinate location = addCoordinateController();
 
-        // TODO
+        BankBranch closest = BranchesByKDTree.closestBranch(branchesByKDTree.getRoot().right, location, 1);
+        System.out.println(closest);
     }
 
     public static void nearestBankBranchController() {
@@ -338,10 +339,17 @@ public final class CommandControllers {
         System.out.print("Bank Name: ");
         String name = in.next();
 
-        System.out.print("Your Location: ");
+        Bank bank = banksByTrieTree.search(name);
+        if (bank == null) {
+            System.out.println("BANK NOT FOUND!");
+            return;
+        }
+
+        System.out.println("Your Location: ");
         Coordinate location = addCoordinateController();
 
-        // TODO
+        BankBranch closest = BranchesByKDTree.closestBranch(bank.branches.getRoot().right, location, 1);
+        System.out.println(closest);
     }
 
     public static void isAvailableBankController() {
