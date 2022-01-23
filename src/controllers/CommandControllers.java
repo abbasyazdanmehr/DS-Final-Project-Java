@@ -50,8 +50,6 @@ public final class CommandControllers {
                 isAvailableBankController();
             } else if ("searchB".equals(command)) {
                 searchBankController();
-            } else if ("delB".equals(command)) {
-                deleteBankController();
             } else if ("printB".equals(command)) {
                 printBankDataController();
             } else if ("printNs".equals(command)) {
@@ -129,16 +127,6 @@ public final class CommandControllers {
         } else {
             System.out.println(bank);
         }
-    }
-
-    public static void deleteBankController() {
-        System.out.println("DELETE_BANK");
-
-        System.out.print("Name: ");
-        String name = in.nextLine();
-
-
-        banksByTrieTree.remove(banksByTrieTree.getRoot(), name, 0);
     }
 
     public static void addNeighbourhoodController() {
