@@ -12,10 +12,16 @@ public class Bank {
     public Bank(String name, BankBranch mainBranch) {
         this.name = name;
         this.branches = new BranchesByKDTree();
-        this.branches.insert(mainBranch);
+        BankBranch branch = copyValue(mainBranch);
+        this.branches.insert(branch);
         for (int i = 0; i < children.length; i++) {
             children[i] = null;
         }
+    }
+
+    private BankBranch copyValue(BankBranch branch) {
+        BankBranch copy = new BankBranch(branch.getName(), branch.getBankName(), branch.getLocation());
+        return copy;
     }
 
     // TrieTree null bank data constructor
@@ -50,7 +56,8 @@ public class Bank {
     }
 
     public void addBranch(BankBranch branch) {
-        this.branches.insert(branch);
+        BankBranch copy = copyValue(branch);
+        this.branches.insert(copy);
     }
 
     public boolean isEqualWith(Bank bank) {

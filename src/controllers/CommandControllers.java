@@ -207,6 +207,12 @@ public final class CommandControllers {
 
         if (!Bank.nameChecker(name)) return;
 
+        Bank bank = banksByTrieTree.search(name);
+        if (bank != null) {
+            System.out.println("Name already chosen!");
+            return;
+        }
+
         System.out.println("Location: ");
         Coordinate location = addCoordinateController();
 
@@ -221,6 +227,7 @@ public final class CommandControllers {
         branchesByKDTree.insert(branch);
         branchesByTrieTree.insert(branch);
         banksByTrieTree.insert(new Bank(name, branch));
+        // Finally, I understand call by reference in java :)
 
         System.out.println("Bank added successfully!");
     }
@@ -232,7 +239,6 @@ public final class CommandControllers {
         String name = in.nextLine();
 
         Bank bank = banksByTrieTree.search(name);
-        System.out.println(bank.getName());
         if (bank == null) {
 
             System.out.println("BANK NOT FOUND!");
@@ -242,14 +248,20 @@ public final class CommandControllers {
             System.out.print("Branch Name: ");
             String branchName = in.nextLine();
 
-            if (!BankBranch.nameChecker(name)) return;
+            if (!BankBranch.nameChecker(branchName)) return;
+
+            BankBranch newBranch = branchesByTrieTree.search(name);
+            if (newBranch != null) {
+                System.out.println("Branch Name already chosen!");
+                return;
+            }
 
             System.out.println("Location: ");
             Coordinate location = addCoordinateController();
 
             if (location == null) return;
 
-            if (branchesByKDTree.searchByCoordinate(location.x, location.y) == null) {
+            if (branchesByKDTree.searchByCoordinate(location.x, location.y) != null) {
                 System.out.println("This Coordinate is full now!");
                 return;
             }

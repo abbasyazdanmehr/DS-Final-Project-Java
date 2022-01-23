@@ -28,20 +28,21 @@ public class BranchesByKDTree {
         int counter = 0;
 
         while (true) {
+
             if (counter % 2 == 0) {
 
                 if (branch.getLocation().x < temp.getLocation().x) {
                     if (temp.left == null) {
                         temp.left = branch;
                         branch.parent = temp;
-                        break;
+                        return;
                     }
                     temp = temp.left;
                 } else {
                     if (temp.right == null) {
                         temp.right = branch;
                         branch.parent = temp;
-                        break;
+                        return;
                     }
                     temp = temp.right;
                 }
@@ -52,14 +53,14 @@ public class BranchesByKDTree {
                     if (temp.left == null) {
                         temp.left = branch;
                         branch.parent = temp;
-                        break;
+                        return;
                     }
                     temp = temp.left;
                 } else {
                     if (temp.right == null) {
                         temp.right = branch;
                         branch.parent = temp;
-                        break;
+                        return;
                     }
                     temp = temp.right;
                 }
