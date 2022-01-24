@@ -1,7 +1,7 @@
 package models;
 
-import java.util.ArrayList;
-import java.util.Arrays;
+import ds.BankList;
+
 
 public class Neighbourhood {
     private final String name;
@@ -9,7 +9,7 @@ public class Neighbourhood {
     private final Coordinate leftDown;
     private final Coordinate rightDown;
     private final Coordinate rightUp;
-    private final ArrayList<Bank> banks;
+    private final BankList banks;
 
     public Neighbourhood(
             String name,
@@ -23,7 +23,7 @@ public class Neighbourhood {
         this.leftDown = leftDown;
         this.rightDown = rightDown;
         this.rightUp = rightUp;
-        this.banks = new ArrayList<>();
+        this.banks = new BankList();
     }
 
     public String getName() {
@@ -50,13 +50,9 @@ public class Neighbourhood {
         banks.add(bank);
     }
 
-    public void addBanks(Bank[] banks) {
-        this.banks.addAll(Arrays.asList(banks));
-    }
-
     public void printBanks() {
-        for (Bank bank : this.banks) {
-            System.out.println(bank);
+        for (int i = 0; i < banks.size(); i++) {
+            System.out.println(banks.get(i));
         }
     }
 
