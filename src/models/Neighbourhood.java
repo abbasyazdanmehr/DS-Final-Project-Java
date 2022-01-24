@@ -1,6 +1,6 @@
 package models;
 
-import ds.BankList;
+import ds.BankBranchList;
 
 
 public class Neighbourhood {
@@ -9,7 +9,7 @@ public class Neighbourhood {
     private final Coordinate leftDown;
     private final Coordinate rightDown;
     private final Coordinate rightUp;
-    private final BankList banks;
+    private final BankBranchList banks;
 
     public Neighbourhood(
             String name,
@@ -23,7 +23,7 @@ public class Neighbourhood {
         this.leftDown = leftDown;
         this.rightDown = rightDown;
         this.rightUp = rightUp;
-        this.banks = new BankList();
+        this.banks = new BankBranchList();
     }
 
     public String getName() {
@@ -46,8 +46,8 @@ public class Neighbourhood {
         return rightUp;
     }
 
-    public void addBank(Bank bank) {
-        banks.add(bank);
+    public void addBranch(BankBranch branch) {
+        banks.add(branch);
     }
 
     public void printBanks() {

@@ -51,7 +51,6 @@ public class Tests {
 
         Bank bawnk = new Bank("bawnk", mainBawnk);
 
-        darakAbad.addBank(bawnk);
 
         darakAbad.printBanks();
     }
