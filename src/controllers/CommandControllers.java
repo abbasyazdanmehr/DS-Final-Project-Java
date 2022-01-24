@@ -306,7 +306,12 @@ public final class CommandControllers {
         System.out.print("Neighbourhood Name: ");
         String name = in.nextLine();
 
-        // TODO
+        for (int i = 0; i < neighbourhoods.size(); i++) {
+            if (neighbourhoods.get(i).getName() == name) {
+                neighbourhoods.get(i).printBanks();
+                break;
+            }
+        }
     }
 
     public static void listBankBranchesController() {
@@ -355,10 +360,19 @@ public final class CommandControllers {
     public static void isAvailableBankController() {
         System.out.println("IS_AVAILABLE_BANK");
 
-        System.out.print("Radius: ");
-        int radius = in.nextInt();
+        int radius;
+        try {
+            System.out.print("Radius: ");
+            radius = in.nextInt();
+        } catch (Exception e) {
+            System.out.println("Radius should be integer!");
+            return;
+        }
 
-        // TODO
+        System.out.println("Your Location: ");
+        Coordinate location = addCoordinateController();
+
+        BranchesByKDTree.printAvailableBranches(branchesByKDTree.getRoot().right, location, radius, 1);
     }
 
     public static void invalidCommand() {

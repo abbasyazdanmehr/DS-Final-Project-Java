@@ -14,6 +14,14 @@ public class NeighbourhoodList {
         index = 0;
     }
 
+    public int size() {
+        return index;
+    }
+
+    public Neighbourhood get(int i) {
+        return neighbourhoods[i];
+    }
+
     public void add(Neighbourhood neighbourhood) {
         if (arrayLength == index) increaseArrayLength();
 

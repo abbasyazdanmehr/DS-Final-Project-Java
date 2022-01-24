@@ -1,6 +1,5 @@
 package ds;
 
-import models.Bank;
 import models.BankBranch;
 import models.Coordinate;
 
@@ -220,8 +219,8 @@ public class BranchesByKDTree {
     public static BankBranch closestBranch(BankBranch branch, Coordinate coordinate, int depth) {
         if (branch == null) return null;
 
-        BankBranch nextBranch = null;
-        BankBranch oppositeBranch = null;
+        BankBranch nextBranch; // next branch if insert
+        BankBranch oppositeBranch; // opposite branch if insert
         boolean goLeftOrRight;
 
         if (depth % 2 == 0) goLeftOrRight = (coordinate.x < branch.getLocation().x);
@@ -239,7 +238,7 @@ public class BranchesByKDTree {
                 coordinate,
                 closestBranch(nextBranch, coordinate, depth + 1),
                 branch
-                );
+        );
 
         boolean checkOppositeSide;
         if (depth % 2 == 0)
@@ -257,6 +256,44 @@ public class BranchesByKDTree {
         }
 
         return best;
+    }
+
+    public static void printAvailableBranches(BankBranch branch, Coordinate coordinate, int radius, int depth) {
+        if (branch == null) return;
+
+        if (Coordinate.distancePower2(coordinate, branch.getLocation()) < radius * radius)
+            System.out.println(branch);
+
+        BankBranch nextBranch; // next branch if insert
+        BankBranch oppositeBranch; // opposite branch if insert
+        boolean goLeftOrRight;
+
+        if (depth % 2 == 0) goLeftOrRight = (coordinate.x < branch.getLocation().x);
+        else goLeftOrRight = (coordinate.y < branch.getLocation().y);
+
+        if (goLeftOrRight) {
+            nextBranch = branch.left;
+            oppositeBranch = branch.right;
+        } else {
+            nextBranch = branch.right;
+            oppositeBranch = branch.left;
+        }
+
+        printAvailableBranches(nextBranch, coordinate, radius, depth + 1);
+
+        boolean checkOppositeSide;
+        if (depth % 2 == 0)
+            checkOppositeSide =
+                    radius > Coordinate.abs(coordinate.x - branch.getLocation().x);
+        else
+            checkOppositeSide =
+                    radius > Coordinate.abs(coordinate.y - branch.getLocation().y);
+
+        if (checkOppositeSide) {
+            printAvailableBranches(oppositeBranch, coordinate, radius, depth + 1);
+        }
+
+
     }
 
 }
