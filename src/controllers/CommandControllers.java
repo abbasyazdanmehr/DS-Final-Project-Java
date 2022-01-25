@@ -51,8 +51,6 @@ public final class CommandControllers {
                 searchBankController();
             } else if ("searchBr".equals(command)) {
                 searchBranchController();
-            } else if ("printB".equals(command)) {
-                printBankDataController();
             } else if ("printNs".equals(command)) {
                 printNeighbourhoodsController();
             } else if ("break".equals(command)) {
@@ -63,17 +61,11 @@ public final class CommandControllers {
                 invalidCommand();
             }
 
-            clearScreen();
-
             System.out.println();
         }
 
     }
 
-    public static void clearScreen() {
-        System.out.print("\033[H\033[2J");
-        System.out.flush();
-    }
 
 
     public static void searchBranchController() {
@@ -86,20 +78,6 @@ public final class CommandControllers {
 
     public static void printNeighbourhoodsController() {
         neighbourhoods.printNeighbourhoods();
-    }
-
-    public static void printBankDataController() {
-        System.out.println("BANK_ALL_DATA");
-
-        System.out.print("Name: ");
-        String name = in.nextLine();
-
-        Bank bank = banksByTrieTree.search(name);
-        if (bank == null) {
-            System.out.println("BANK NOT FOUND!");
-        } else {
-            bank.printAllData();
-        }
     }
 
     public static Coordinate addCoordinateController() {
@@ -273,6 +251,8 @@ public final class CommandControllers {
         System.out.println("Location: ");
         Coordinate location = addCoordinateController();
 
+        if (location == null) return;
+
         BankBranch branch = branchesByKDTree.searchByCoordinate(location.x, location.y);
         if (branch == null) {
             System.out.println("Branch Not Found!");
@@ -282,7 +262,7 @@ public final class CommandControllers {
     }
 
     public static void deleteBranch(BankBranch branch) {
-        if (branch.getBankName() == branch.getName()) {
+        if (branch.getBankName().equals(branch.getName())) {
             System.out.println("This branch is main branch Bro!");
             return;
         }
@@ -291,7 +271,7 @@ public final class CommandControllers {
         branchesByKDTree.deleteFromKDTree(branch);
 
         // deleting from trie tree
-        branchesByTrieTree.deleteFromTrieTree(
+        BranchesByTrieTree.deleteFromTrieTree(
                 branchesByTrieTree.getRoot(),
                 branch.getName(),
                 0

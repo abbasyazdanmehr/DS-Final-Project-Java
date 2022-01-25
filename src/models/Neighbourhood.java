@@ -1,9 +1,5 @@
 package models;
 
-import controllers.CommandControllers;
-import ds.BankBranchList;
-import ds.BranchesByKDTree;
-
 
 public class Neighbourhood {
     private final String name;
@@ -27,18 +23,13 @@ public class Neighbourhood {
     }
 
     public boolean isNeighbourhoodSurround(Coordinate coordinate) {
-        if (
-                leftEdge() > coordinate.x
-                ||
-                        rightEdge() < coordinate.x
-                ||
-                        upEdge() < coordinate.y
-                ||
-                        downEdge() > coordinate.y
-        )
-            return false;
-
-        return true;
+        return leftEdge() <= coordinate.x
+                &&
+                rightEdge() >= coordinate.x
+                &&
+                upEdge() >= coordinate.y
+                &&
+                downEdge() <= coordinate.y;
     }
 
     public String getName() {
