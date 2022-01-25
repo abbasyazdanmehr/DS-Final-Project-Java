@@ -33,7 +33,6 @@ public final class CommandControllers {
                 addNeighbourhoodController();
             } else if ("addB".equals(command)) {
                 addBankController();
-                in.nextLine();
             } else if ("addBr".equals(command)) {
                 addBankBranchController();
             } else if ("delBr".equals(command)) {
@@ -64,11 +63,17 @@ public final class CommandControllers {
                 invalidCommand();
             }
 
+            clearScreen();
+
             System.out.println();
         }
 
     }
 
+    public static void clearScreen() {
+        System.out.print("\033[H\033[2J");
+        System.out.flush();
+    }
 
 
     public static void searchBranchController() {
@@ -307,8 +312,12 @@ public final class CommandControllers {
         String name = in.nextLine();
 
         for (int i = 0; i < neighbourhoods.size(); i++) {
-            if (neighbourhoods.get(i).getName() == name) {
-                neighbourhoods.get(i).printBanks();
+            if (neighbourhoods.get(i).getName().equals(name)) {
+                BranchesByKDTree.printNeighbourhoodBranches(
+                        branchesByKDTree.getRoot().right,
+                        neighbourhoods.get(i),
+                        1
+                );
                 break;
             }
         }

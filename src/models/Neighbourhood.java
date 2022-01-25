@@ -1,6 +1,8 @@
 package models;
 
+import controllers.CommandControllers;
 import ds.BankBranchList;
+import ds.BranchesByKDTree;
 
 
 public class Neighbourhood {
@@ -9,7 +11,6 @@ public class Neighbourhood {
     private final Coordinate leftDown;
     private final Coordinate rightDown;
     private final Coordinate rightUp;
-    private final BankBranchList banks;
 
     public Neighbourhood(
             String name,
@@ -23,7 +24,21 @@ public class Neighbourhood {
         this.leftDown = leftDown;
         this.rightDown = rightDown;
         this.rightUp = rightUp;
-        this.banks = new BankBranchList();
+    }
+
+    public boolean isNeighbourhoodSurround(Coordinate coordinate) {
+        if (
+                leftEdge() > coordinate.x
+                ||
+                        rightEdge() < coordinate.x
+                ||
+                        upEdge() < coordinate.y
+                ||
+                        downEdge() > coordinate.y
+        )
+            return false;
+
+        return true;
     }
 
     public String getName() {
@@ -46,14 +61,20 @@ public class Neighbourhood {
         return rightUp;
     }
 
-    public void addBranch(BankBranch branch) {
-        banks.add(branch);
+    public int leftEdge() {
+        return leftDown.x;
     }
 
-    public void printBanks() {
-        for (int i = 0; i < banks.size(); i++) {
-            System.out.println(banks.get(i));
-        }
+    public int rightEdge() {
+        return rightUp.x;
+    }
+
+    public int downEdge() {
+        return rightDown.y;
+    }
+
+    public int upEdge() {
+        return leftUp.y;
     }
 
     @Override

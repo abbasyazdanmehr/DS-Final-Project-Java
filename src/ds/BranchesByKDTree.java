@@ -2,6 +2,7 @@ package ds;
 
 import models.BankBranch;
 import models.Coordinate;
+import models.Neighbourhood;
 
 // Node is a BankBranch Object
 public class BranchesByKDTree {
@@ -216,11 +217,12 @@ public class BranchesByKDTree {
         }
     }
 
+    // understanding key: direction of traversing in tree is important
     public static BankBranch closestBranch(BankBranch branch, Coordinate coordinate, int depth) {
         if (branch == null) return null;
 
-        BankBranch nextBranch; // next branch if insert
-        BankBranch oppositeBranch; // opposite branch if insert
+        BankBranch nextBranch;      // next branch if insert
+        BankBranch oppositeBranch;  // opposite branch if insert
         boolean goLeftOrRight;
 
         if (depth % 2 == 0) goLeftOrRight = (coordinate.x < branch.getLocation().x);
@@ -258,14 +260,15 @@ public class BranchesByKDTree {
         return best;
     }
 
+    // understanding key: direction of traversing in tree is important
     public static void printAvailableBranches(BankBranch branch, Coordinate coordinate, int radius, int depth) {
         if (branch == null) return;
 
         if (Coordinate.distancePower2(coordinate, branch.getLocation()) < radius * radius)
             System.out.println(branch);
 
-        BankBranch nextBranch; // next branch if insert
-        BankBranch oppositeBranch; // opposite branch if insert
+        BankBranch nextBranch;      // next branch if insert
+        BankBranch oppositeBranch;  // opposite branch if insert
         boolean goLeftOrRight;
 
         if (depth % 2 == 0) goLeftOrRight = (coordinate.x < branch.getLocation().x);
@@ -291,6 +294,46 @@ public class BranchesByKDTree {
 
         if (checkOppositeSide) {
             printAvailableBranches(oppositeBranch, coordinate, radius, depth + 1);
+        }
+
+
+    }
+
+    // understanding key: direction of traversing in tree is important
+    public static void printNeighbourhoodBranches(BankBranch branch, Neighbourhood neighbourhood, int depth) {
+        if (branch == null) return;
+
+        if (neighbourhood.isNeighbourhoodSurround(branch.getLocation())) {
+            System.out.println(branch);
+        }
+
+        int firstEdge;
+        int endEdge;
+        int branchParam; // location.x or location.y
+        if (depth % 2 == 0) {
+            firstEdge = neighbourhood.leftEdge();
+            endEdge = neighbourhood.rightEdge();
+            branchParam = branch.getLocation().x;
+        } else {
+            firstEdge = neighbourhood.downEdge();
+            endEdge = neighbourhood.upEdge();
+            branchParam = branch.getLocation().y;
+        }
+
+
+        if (branchParam < firstEdge) {
+
+            printNeighbourhoodBranches(branch.right, neighbourhood, depth + 1);
+
+        } else if (branchParam > endEdge) {
+
+            printNeighbourhoodBranches(branch.left, neighbourhood, depth + 1);
+
+        } else {
+
+            printNeighbourhoodBranches(branch.left, neighbourhood, depth + 1);
+            printNeighbourhoodBranches(branch.right, neighbourhood, depth + 1);
+
         }
 
 
