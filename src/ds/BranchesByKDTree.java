@@ -261,7 +261,7 @@ public class BranchesByKDTree {
     }
 
     // understanding key: direction of traversing in tree is important
-    public static void printAvailableBranches(BankBranch branch, Coordinate coordinate, int radius, int depth) {
+    public static void printAvailableBranches(BankBranch branch, Coordinate coordinate, Double radius, int depth) {
         if (branch == null) return;
 
         if (Coordinate.distancePower2(coordinate, branch.getLocation()) < radius * radius)

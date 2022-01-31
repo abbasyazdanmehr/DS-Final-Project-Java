@@ -62,10 +62,19 @@ public final class CommandControllers {
             }
 
             System.out.println();
+            cls();
         }
 
     }
 
+
+    public static void cls(){
+        try {
+            new ProcessBuilder("cmd","/c","cls").inheritIO().start().waitFor();
+        } catch (Exception e) {
+            System.out.println("Error for clearing screen!");
+        }
+    }
 
 
     public static void searchBranchController() {
@@ -349,12 +358,12 @@ public final class CommandControllers {
     public static void isAvailableBankController() {
         System.out.println("IS_AVAILABLE_BANK");
 
-        int radius;
+        double radius;
         try {
             System.out.print("Radius: ");
-            radius = in.nextInt();
+            radius = in.nextDouble();
         } catch (Exception e) {
-            System.out.println("Radius should be integer!");
+            System.out.println("Radius should be Double!");
             return;
         }
 
